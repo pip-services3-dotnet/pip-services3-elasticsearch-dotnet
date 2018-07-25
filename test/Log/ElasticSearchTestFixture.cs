@@ -1,11 +1,9 @@
-﻿using PipServices.Commons.Log;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using PipServices.Oss.ElasticSearch;
+using PipServices.Components.Log;
 using Xunit;
 
-namespace PipServices.Oss.Fixtures
+namespace PipServices.ElasticSearch.Log
 {
     public sealed class ElasticSearchLoggerFixture
     {
