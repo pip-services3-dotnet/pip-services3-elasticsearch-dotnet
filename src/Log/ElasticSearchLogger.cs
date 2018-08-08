@@ -53,14 +53,14 @@ namespace PipServices.ElasticSearch.Log
             base.Write(level, correlationId, error, message);
         }
 
-        public bool IsOpened()
+        public bool IsOpen()
         {
             return _timer != null;
         }
 
         public async Task OpenAsync(string correlationId)
         {
-            if (IsOpened()) return;
+            if (IsOpen()) return;
 
             var connection = await _connectionResolver.ResolveAsync(correlationId);
             var uri = new Uri(connection.Uri);
