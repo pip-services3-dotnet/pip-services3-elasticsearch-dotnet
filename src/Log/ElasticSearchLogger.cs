@@ -13,6 +13,53 @@ using PipServices.Rpc.Connect;
 
 namespace PipServices.ElasticSearch.Log
 {
+    /// <summary>
+    /// Logger that dumps execution logs to ElasticSearch service.
+    /// 
+    /// ElasticSearch is a popular search index.It is often used 
+    /// to store and index execution logs by itself or as a part of
+    /// ELK (ElasticSearch - Logstash - Kibana) stack.
+    /// 
+    /// Authentication is not supported in this version.
+    /// 
+    /// ### Configuration parameters ###
+    /// 
+    /// - level:             maximum log level to capture
+    /// - source:            source (context) name
+    /// - connection(s):           
+    /// - discovery_key:         (optional) a key to retrieve the connection from IDiscovery
+    /// - protocol:              connection protocol: http or https
+    /// - host:                  host name or IP address
+    /// - port:                  port number
+    /// - uri:                   resource URI or connection string with all parameters in it
+    /// - options:
+    /// - interval:        interval in milliseconds to save log messages (default: 10 seconds)
+    /// - max_cache_size:  maximum number of messages stored in this cache (default: 100)        
+    /// - index:           ElasticSearch index name (default: "log")
+    /// - daily:           true to create a new index every day by adding date suffix to the index name(default: false)
+    /// - reconnect:       reconnect timeout in milliseconds(default: 60 sec)
+    /// - timeout:         invocation timeout in milliseconds(default: 30 sec)
+    /// - max_retries:     maximum number of retries(default: 3)
+    /// - index_message:   true to enable indexing for message object (default: false)
+    /// 
+    /// ### References ###
+    /// 
+    /// - <code>\*:context-info:\*:\*:1.0</code>      (optional)[[ContextInfo]] to detect the context id and specify counters source
+    /// - <code>\*:discovery:\*:\*:1.0</code>         (optional) IDiscovery services to resolve connection
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// var logger = new ElasticSearchLogger();
+    /// logger.Configure(ConfigParams.FromTuples(
+    /// "connection.protocol", "http",
+    /// "connection.host", "localhost",
+    /// "connection.port", 9200 ));
+    /// logger.Open("123");
+    /// 
+    /// logger.Error("123", ex, "Error occured: %s", ex.message);
+    /// logger.Debug("123", "Everything is OK.");
+    /// </code>
+    /// </example>
     public class ElasticSearchLogger : CachedLogger, IReferenceable, IOpenable
     {
         private ConsoleLogger _errorConsoleLogger = new ConsoleLogger { Level = LogLevel.Trace };
@@ -23,9 +70,16 @@ namespace PipServices.ElasticSearch.Log
         private bool _dailyIndex = false;
         private string _currentIndexName;
 
+        /// <summary>
+        /// Creates a new instance of the logger.
+        /// </summary>
         public ElasticSearchLogger()
         { }
 
+        /// <summary>
+        /// Configures component by passing configuration parameters.
+        /// </summary>
+        /// <param name="config">configuration parameters to be set.</param>
         public override void Configure(ConfigParams config)
         {
             base.Configure(config);
@@ -36,6 +90,10 @@ namespace PipServices.ElasticSearch.Log
             _dailyIndex = config.GetAsBooleanWithDefault("daily", _dailyIndex);
         }
 
+        /// <summary>
+        /// Sets references to dependent components.
+        /// </summary>
+        /// <param name="references">references to locate the component dependencies.</param>
         public override void SetReferences(IReferences references)
         {
             base.SetReferences(references);
@@ -43,6 +101,13 @@ namespace PipServices.ElasticSearch.Log
             _errorConsoleLogger.SetReferences(references);
         }
 
+        /// <summary>
+        /// Writes a log message to the logger destination.
+        /// </summary>
+        /// <param name="level">a log level.</param>
+        /// <param name="correlationId">(optional) transaction id to trace execution through call chain.</param>
+        /// <param name="error">an error object associated with this message.</param>
+        /// <param name="message">a human-readable message to log.</param>
         protected override void Write(LogLevel level, string correlationId, Exception error, string message)
         {
             if (Level < level)
@@ -53,11 +118,19 @@ namespace PipServices.ElasticSearch.Log
             base.Write(level, correlationId, error, message);
         }
 
+        /// <summary>
+        /// Checks if the component is opened.
+        /// </summary>
+        /// <returns>true if the component has been opened and false otherwise.</returns>
         public bool IsOpen()
         {
             return _timer != null;
         }
 
+        /// <summary>
+        /// Opens the component.
+        /// </summary>
+        /// <param name="correlationId">(optional) transaction id to trace execution through call chain.</param>
         public async Task OpenAsync(string correlationId)
         {
             if (IsOpen()) return;
@@ -163,6 +236,10 @@ namespace PipServices.ElasticSearch.Log
             }
         }
 
+        /// <summary>
+        /// Closes component and frees used resources.
+        /// </summary>
+        /// <param name="correlationId">(optional) transaction id to trace execution through call chain.</param>
         public async Task CloseAsync(string correlationId)
         {
             // Log all remaining messages before closing
@@ -184,6 +261,10 @@ namespace PipServices.ElasticSearch.Log
             Dump();
         }
 
+        /// <summary>
+        /// Saves log messages from the cache.
+        /// </summary>
+        /// <param name="messages">a list with log messages</param>
         protected override void Save(List<LogMessage> messages)
         {
             if (messages == null || messages.Count == 0) return;
