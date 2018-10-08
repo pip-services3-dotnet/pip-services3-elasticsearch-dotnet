@@ -171,13 +171,15 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>_currentIndexName</
 <ul>
 <li>level: maximum log level to capture</li>
 <li>source: source (context) name</li>
-<li>connection(s): <br />
-- discovery_key: (optional) a key to retrieve the connection from IDiscovery</li>
+</ul>
+<p>connection(s): <br />
+- discovery_key: (optional) a key to retrieve the connection from <a href="https://rawgit.com/pip-services-dotnet/pip-services-components-dotnet/master/doc/api/interface_pip_services_1_1_components_1_1_connect_1_1_i_discovery.html">IDiscovery</a></p><ul>
 <li>protocol: connection protocol: http or https</li>
 <li>host: host name or IP address</li>
 <li>port: port number</li>
 <li>uri: resource URI or connection string with all parameters in it</li>
-<li>options:</li>
+</ul>
+<p>options:</p><ul>
 <li>interval: interval in milliseconds to save log messages (default: 10 seconds)</li>
 <li>max_cache_size: maximum number of messages stored in this cache (default: 100) <br />
 - index: <a class="el" href="namespace_pip_services_1_1_elastic_search.html">ElasticSearch</a> index name (default: "log")</li>
@@ -189,8 +191,8 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>_currentIndexName</
 </ul>
 <h3>References</h3>
 <ul>
-<li><code>*:context-info:*:*:1.0</code> (optional)[[ContextInfo]] to detect the context id and specify counters source</li>
-<li><code>*:discovery:*:*:1.0</code> (optional) IDiscovery services to resolve connection </li>
+<li>*:context-info:*:*:1.0 (optional) <a href="https://rawgit.com/pip-services-dotnet/pip-services-components-dotnet/master/doc/api/class_pip_services_1_1_components_1_1_info_1_1_context_info.html">ContextInfo</a> to detect the context id and specify counters source</li>
+<li>*:discovery:*:*:1.0 (optional) <a href="https://rawgit.com/pip-services-dotnet/pip-services-components-dotnet/master/doc/api/interface_pip_services_1_1_components_1_1_connect_1_1_i_discovery.html">IDiscovery</a> services to resolve connection </li>
 </ul>
 <div class="fragment"><div class="line">var logger = <span class="keyword">new</span> <a class="code" href="class_pip_services_1_1_elastic_search_1_1_log_1_1_elastic_search_logger.html#aa4779c9f31f6504716d803a0ff591464">ElasticSearchLogger</a>();</div><div class="line">logger.Configure(ConfigParams.FromTuples(</div><div class="line"><span class="stringliteral">&quot;connection.protocol&quot;</span>, <span class="stringliteral">&quot;http&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;connection.host&quot;</span>, <span class="stringliteral">&quot;localhost&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;connection.port&quot;</span>, 9200 ));</div><div class="line">logger.Open(<span class="stringliteral">&quot;123&quot;</span>);</div><div class="line"></div><div class="line">logger.Error(<span class="stringliteral">&quot;123&quot;</span>, ex, <span class="stringliteral">&quot;Error occured: %s&quot;</span>, ex.message);</div><div class="line">logger.Debug(<span class="stringliteral">&quot;123&quot;</span>, <span class="stringliteral">&quot;Everything is OK.&quot;</span>);</div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa4779c9f31f6504716d803a0ff591464"></a>

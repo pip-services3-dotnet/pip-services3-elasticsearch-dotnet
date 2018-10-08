@@ -26,13 +26,15 @@ namespace PipServices.ElasticSearch.Log
     /// 
     /// - level:             maximum log level to capture
     /// - source:            source (context) name
-    /// - connection(s):           
-    /// - discovery_key:         (optional) a key to retrieve the connection from IDiscovery
+    /// 
+    /// connection(s):           
+    /// - discovery_key:         (optional) a key to retrieve the connection from <a href="https://rawgit.com/pip-services-dotnet/pip-services-components-dotnet/master/doc/api/interface_pip_services_1_1_components_1_1_connect_1_1_i_discovery.html">IDiscovery</a>
     /// - protocol:              connection protocol: http or https
     /// - host:                  host name or IP address
     /// - port:                  port number
     /// - uri:                   resource URI or connection string with all parameters in it
-    /// - options:
+    /// 
+    /// options:
     /// - interval:        interval in milliseconds to save log messages (default: 10 seconds)
     /// - max_cache_size:  maximum number of messages stored in this cache (default: 100)        
     /// - index:           ElasticSearch index name (default: "log")
@@ -44,8 +46,8 @@ namespace PipServices.ElasticSearch.Log
     /// 
     /// ### References ###
     /// 
-    /// - <code>\*:context-info:\*:\*:1.0</code>      (optional)[[ContextInfo]] to detect the context id and specify counters source
-    /// - <code>\*:discovery:\*:\*:1.0</code>         (optional) IDiscovery services to resolve connection
+    /// - *:context-info:*:*:1.0      (optional) <a href="https://rawgit.com/pip-services-dotnet/pip-services-components-dotnet/master/doc/api/class_pip_services_1_1_components_1_1_info_1_1_context_info.html">ContextInfo</a> to detect the context id and specify counters source
+    /// - *:discovery:*:*:1.0         (optional) <a href="https://rawgit.com/pip-services-dotnet/pip-services-components-dotnet/master/doc/api/interface_pip_services_1_1_components_1_1_connect_1_1_i_discovery.html">IDiscovery</a> services to resolve connection
     /// </summary>
     /// <example>
     /// <code>
