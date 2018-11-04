@@ -2,9 +2,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
-using PipServices.Components.Log;
+using PipServices3.Components.Log;
 
-namespace PipServices.ElasticSearch.Log
+namespace PipServices3.ElasticSearch.Log
 {
     /// <summary>
     /// Captures the output from TestESLoggers so the results can be inspected

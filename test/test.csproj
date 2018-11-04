@@ -5,9 +5,9 @@
 
     <IsPackable>false</IsPackable>
 
-    <AssemblyName>PipServices.ElasticSearch.Test</AssemblyName>
+    <AssemblyName>PipServices3.ElasticSearch.Test</AssemblyName>
 
-    <RootNamespace>PipServices.ElasticSearch</RootNamespace>
+    <RootNamespace>PipServices3.ElasticSearch</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

@@ -1,8 +1,8 @@
-﻿using PipServices.Components.Log;
+﻿using PipServices3.Components.Log;
 using System;
 using Xunit;
 
-namespace PipServices.ElasticSearch.Log
+namespace PipServices3.ElasticSearch.Log
 {
     public sealed class LoggerFixture
     {

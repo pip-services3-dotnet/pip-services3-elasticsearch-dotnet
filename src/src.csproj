@@ -2,20 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>PipServices.ElasticSearch</AssemblyName>
-    <RootNamespace>PipServices.ElasticSearch</RootNamespace>
+    <AssemblyName>PipServices3.ElasticSearch</AssemblyName>
+    <RootNamespace>PipServices3.ElasticSearch</RootNamespace>
     <ApplicationIcon />
     <Win32Resource />
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <Authors>Sergey Seroukhov, Alex Mazur, Andrew Harrington</Authors>
     <Copyright>Conceptual Vision Consulting LLC. 2017-2018</Copyright>
     <Description>ElasticSearch logger for Pip.Services in .NET</Description>
     <Company>Conceptual Vision Consulting LLC.</Company>
-    <Product>PipServices.ElasticSearch</Product>
+    <Product>PipServices3.ElasticSearch</Product>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/pip-services-dotnet/pip-services-elasticsearch-dotnet</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/pip-services/pip-services/master/design/Icon.png</PackageIconUrl>
-    <PackageTags>pip-services microservices framework</PackageTags>
+    <PackageProjectUrl>https://github.com/pip-services3-dotnet/pip-services3-elasticsearch-dotnet</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/pip-services3/pip-services3/master/design/Icon.png</PackageIconUrl>
+    <PackageTags>pip-services3 microservices framework</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -30,8 +30,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Elasticsearch.Net" Version="6.2.0" />
-    <PackageReference Include="PipServices.Commons" Version="3.0.2" />
-    <PackageReference Include="PipServices.Components" Version="3.0.2" />
-    <PackageReference Include="PipServices.Rpc" Version="3.0.3" />
+    <PackageReference Include="PipServices3.Commons" Version="3.0.6" />
+    <PackageReference Include="PipServices3.Components" Version="3.0.4" />
+    <PackageReference Include="PipServices3.Rpc" Version="3.0.4" />
   </ItemGroup>
 </Project>
