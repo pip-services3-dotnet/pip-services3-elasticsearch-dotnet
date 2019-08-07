@@ -1,6 +1,6 @@
 # ElasticSearch for Pip.Services in .NET Changelog
 
-## <a name="3.0.0"></a> 3.0.0 (2018-08-24)
+## <a name="3.0.0-3.0.3"></a> 3.0.0-3.0.3 (2019-07-31)
 
 ### Breaking Changes
 * Moved to a separate package
