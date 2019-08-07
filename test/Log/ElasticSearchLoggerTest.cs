@@ -52,7 +52,7 @@ namespace PipServices3.ElasticSearch.Log
 
         [Theory]
         [InlineData("yyyyMMdd")]
-        [InlineData("yyyy.M.dd")]
+        [InlineData("yyyy.MM.dd")]
         public void TestSimpleLogging(string indexPattern)
         {
             if (_enabled)
@@ -66,7 +66,7 @@ namespace PipServices3.ElasticSearch.Log
 
         [Theory]
         [InlineData("yyyyMMdd")]
-        [InlineData("yyyy.M.dd")]
+        [InlineData("yyyy.MM.dd")]
         public void TestErrorLogging(string indexPattern)
         {
             if (_enabled)
