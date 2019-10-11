@@ -300,8 +300,6 @@ namespace PipServices3.ElasticSearch.Log
                 }
                 catch
                 {
-                    // TODO - We need to know when this occurs !!!!!!!!!!!!!!
-
                     // Do nothing if elastic search client was not enable to process bulk of messages
                     _errorConsoleLogger.Error(null, "Failed to bulk messages with Elastic Search Logger.");
                 }
