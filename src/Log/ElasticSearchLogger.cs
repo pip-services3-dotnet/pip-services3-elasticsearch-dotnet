@@ -36,8 +36,9 @@ namespace PipServices3.ElasticSearch.Log
     /// 
     /// options:
     /// - interval:        interval in milliseconds to save log messages (default: 10 seconds)
-    /// - max_cache_size:  maximum number of messages stored in this cache (default: 100)        
+    /// - max_cache_size:  maximum number of messages stored in this cache (default: 100)
     /// - index:           ElasticSearch index name (default: "log")
+    /// - indexPattern     Index pattern (default: "yyyyMMdd")
     /// - daily:           true to create a new index every day by adding date suffix to the index name(default: false)
     /// - reconnect:       reconnect timeout in milliseconds(default: 60 sec)
     /// - timeout:         invocation timeout in milliseconds(default: 30 sec)
@@ -69,6 +70,7 @@ namespace PipServices3.ElasticSearch.Log
         private HttpConnectionResolver _connectionResolver = new HttpConnectionResolver();
         private ElasticLowLevelClient _client;
         private string _indexName = "log";
+        private string _indexPattern = "yyyyMMdd";
         private bool _dailyIndex = false;
         private string _currentIndexName;
 
@@ -90,6 +92,7 @@ namespace PipServices3.ElasticSearch.Log
 
             _indexName = config.GetAsStringWithDefault("index", _indexName);
             _dailyIndex = config.GetAsBooleanWithDefault("daily", _dailyIndex);
+            _indexPattern = config.GetAsStringWithDefault ("indexPattern", _indexPattern);
         }
 
         /// <summary>
@@ -169,8 +172,8 @@ namespace PipServices3.ElasticSearch.Log
             if (!_dailyIndex) return _indexName;
 
             var today = DateTime.UtcNow.Date;
-            var dateSuffix = today.ToString("yyyyMMdd");
-            return _indexName + "-" + dateSuffix;  
+            var dateSuffix = today.ToString(_indexPattern);
+            return _indexName + "-" + dateSuffix;
         }
 
         private async Task CreateIndex(string correlationId, bool force)

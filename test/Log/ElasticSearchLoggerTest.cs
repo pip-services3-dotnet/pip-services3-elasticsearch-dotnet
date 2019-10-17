@@ -12,6 +12,8 @@ namespace PipServices3.ElasticSearch.Log
         private readonly LoggerFixture _fixture;
         private readonly ElasticSearchLoggerFixture _esFixture;
 
+        private string _indexPattern = "yyyyMMdd";
+
         public ElasticSearchLoggerTest()
         {
             var ELASTICSEARCH_ENABLED = Environment.GetEnvironmentVariable("ELASTICSEARCH_ENABLED") ?? "true";
@@ -26,6 +28,7 @@ namespace PipServices3.ElasticSearch.Log
                     "level", "trace",
                     "source", "test",
                     "index", "log",
+                    "indexPattern", _indexPattern,
                     "daily", true,
                     "connection.host", ELASTICSEARCH_SERVICE_HOST,
                     "connection.port", ELASTICSEARCH_SERVICE_PORT
@@ -47,21 +50,31 @@ namespace PipServices3.ElasticSearch.Log
             }
         }
 
-        [Fact]
-        public void TestSimpleLogging()
+        [Theory]
+        [InlineData("yyyyMMdd")]
+        [InlineData("yyyy.MM.dd")]
+        [InlineData("yyyy.M.dd")]
+        public void TestSimpleLogging(string indexPattern)
         {
             if (_enabled)
             {
+                _indexPattern = indexPattern;
+
                 _fixture.TestSimpleLogging();
                 _esFixture.TestSimpleLogging();
             }
         }
 
-        [Fact]
-        public void TestErrorLogging()
+        [Theory]
+        [InlineData("yyyyMMdd")]
+        [InlineData("yyyy.MM.dd")]
+        [InlineData("yyyy.M.dd")]
+        public void TestErrorLogging(string indexPattern)
         {
             if (_enabled)
             {
+                _indexPattern = indexPattern;
+
                 _fixture.TestErrorLogging();
                 _esFixture.TestErrorLogging();
             }
