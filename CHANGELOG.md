@@ -1,5 +1,10 @@
 # ElasticSearch for Pip.Services in .NET Changelog
 
+## <a name="3.0.4"></a> 3.0.4 (2019-10-17)
+
+### Feature
+* Added an ability to specify Index Pattern from configuration file
+
 ## <a name="3.0.0-3.0.3"></a> 3.0.0-3.0.3 (2019-07-31)
 
 ### Breaking Changes
