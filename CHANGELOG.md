@@ -1,5 +1,10 @@
 # ElasticSearch for Pip.Services in .NET Changelog
 
+## <a name="3.0.5"></a> 3.0.5 (2020-01-13)
+
+### Breaking Changes
+* Added 'pip-services' descriptors
+
 ## <a name="3.0.4"></a> 3.0.4 (2019-10-17)
 
 ### Feature
