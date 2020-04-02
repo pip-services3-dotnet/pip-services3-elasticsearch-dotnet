@@ -12,7 +12,7 @@ namespace PipServices3.ElasticSearch.Log
         private readonly LoggerFixture _fixture;
         private readonly ElasticSearchLoggerFixture _esFixture;
 
-        private string _indexPattern = "yyyyMMdd";
+        private string _dateFormat = "yyyyMMdd";
 
         public ElasticSearchLoggerTest()
         {
@@ -21,6 +21,7 @@ namespace PipServices3.ElasticSearch.Log
             var ELASTICSEARCH_SERVICE_PORT = Environment.GetEnvironmentVariable("ELASTICSEARCH_SERVICE_PORT") ?? "9200";
 
             _enabled = BooleanConverter.ToBoolean(ELASTICSEARCH_ENABLED);
+
             if (_enabled)
             {
                 _logger = new TestElasticSearchLogger();
@@ -28,7 +29,7 @@ namespace PipServices3.ElasticSearch.Log
                     "level", "trace",
                     "source", "test",
                     "index", "log",
-                    "indexPattern", _indexPattern,
+                    "date_format", _dateFormat,
                     "daily", true,
                     "connection.host", ELASTICSEARCH_SERVICE_HOST,
                     "connection.port", ELASTICSEARCH_SERVICE_PORT
@@ -38,7 +39,7 @@ namespace PipServices3.ElasticSearch.Log
                 _esFixture = new ElasticSearchLoggerFixture(_logger);
 
                 _logger.OpenAsync(null).Wait();
-                _logger.OpenAsync(null).Wait();
+                // _logger.OpenAsync(null).Wait();
             }
         }
 
@@ -54,11 +55,11 @@ namespace PipServices3.ElasticSearch.Log
         [InlineData("yyyyMMdd")]
         [InlineData("yyyy.MM.dd")]
         [InlineData("yyyy.M.dd")]
-        public void TestSimpleLogging(string indexPattern)
+        public void TestSimpleLogging(string dateFormat)
         {
             if (_enabled)
             {
-                _indexPattern = indexPattern;
+                _dateFormat = dateFormat;
 
                 _fixture.TestSimpleLogging();
                 _esFixture.TestSimpleLogging();
@@ -69,11 +70,11 @@ namespace PipServices3.ElasticSearch.Log
         [InlineData("yyyyMMdd")]
         [InlineData("yyyy.MM.dd")]
         [InlineData("yyyy.M.dd")]
-        public void TestErrorLogging(string indexPattern)
+        public void TestErrorLogging(string dateFormat)
         {
             if (_enabled)
             {
-                _indexPattern = indexPattern;
+                _dateFormat = dateFormat;
 
                 _fixture.TestErrorLogging();
                 _esFixture.TestErrorLogging();
