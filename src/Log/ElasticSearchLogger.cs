@@ -38,7 +38,7 @@ namespace PipServices3.ElasticSearch.Log
     /// - interval:        interval in milliseconds to save log messages (default: 10 seconds)
     /// - max_cache_size:  maximum number of messages stored in this cache (default: 100)
     /// - index:           ElasticSearch index name (default: "log")
-    /// - indexPattern     Index pattern (default: "yyyyMMdd")
+    /// - date_format      The date format to use when creating the index name. Eg. log-yyyyMMdd (default: "yyyyMMdd"). See [[https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings]]
     /// - daily:           true to create a new index every day by adding date suffix to the index name(default: false)
     /// - reconnect:       reconnect timeout in milliseconds(default: 60 sec)
     /// - timeout:         invocation timeout in milliseconds(default: 30 sec)
@@ -69,10 +69,15 @@ namespace PipServices3.ElasticSearch.Log
         private FixedRateTimer _timer;
         private HttpConnectionResolver _connectionResolver = new HttpConnectionResolver();
         private ElasticLowLevelClient _client;
+
         private string _indexName = "log";
-        private string _indexPattern = "yyyyMMdd";
+        private string _dateFormat = "yyyyMMdd";
         private bool _dailyIndex = false;
         private string _currentIndexName;
+        private double _reconnect = 60000;
+        private double _timeout = 30000;
+        private int _maxRetries = 3;
+        private bool _indexMessage = false;
 
         /// <summary>
         /// Creates a new instance of the logger.
@@ -91,8 +96,12 @@ namespace PipServices3.ElasticSearch.Log
             _errorConsoleLogger.Configure(config);
 
             _indexName = config.GetAsStringWithDefault("index", _indexName);
+            _dateFormat = config.GetAsStringWithDefault ("date_format", _dateFormat);
             _dailyIndex = config.GetAsBooleanWithDefault("daily", _dailyIndex);
-            _indexPattern = config.GetAsStringWithDefault ("indexPattern", _indexPattern);
+            _reconnect = config.GetAsDoubleWithDefault("options.reconnect", _reconnect);
+            _timeout = config.GetAsDoubleWithDefault("options.timeout", _timeout);
+            _maxRetries = config.GetAsIntegerWithDefault("options.max_retries", _maxRetries);
+            _indexMessage = config.GetAsBooleanWithDefault("options.index_message", _indexMessage);
         }
 
         /// <summary>
@@ -147,8 +156,11 @@ namespace PipServices3.ElasticSearch.Log
             {
                 // Create client
                 var settings = new ConnectionConfiguration(uri)
-                    .RequestTimeout(TimeSpan.FromMinutes(2))
+                    .RequestTimeout(TimeSpan.FromMilliseconds(_timeout))
+                    .DeadTimeout(TimeSpan.FromMilliseconds(_reconnect))
+                    .MaximumRetries(_maxRetries)
                     .ThrowExceptions(true);
+
                 _client = new ElasticLowLevelClient(settings);
 
                 // Create index if it doesn't exist
@@ -172,8 +184,8 @@ namespace PipServices3.ElasticSearch.Log
             if (!_dailyIndex) return _indexName;
 
             var today = DateTime.UtcNow.Date;
-            var dateSuffix = today.ToString(_indexPattern);
-            return _indexName + "-" + dateSuffix;
+            var datePattern = today.ToString(_dateFormat);
+            return _indexName + "-" + datePattern;
         }
 
         private async Task CreateIndex(string correlationId, bool force)
@@ -217,7 +229,7 @@ namespace PipServices3.ElasticSearch.Log
                                         stack_trace = new { type = "text", index = false }
                                     }
                                 },
-                                message = new { type = "text", index = false }
+                                message = new { type = "text", index = _indexMessage }
                             }
                         }
                     }
