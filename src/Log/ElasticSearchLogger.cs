@@ -38,7 +38,7 @@ namespace PipServices3.ElasticSearch.Log
     /// - interval:        interval in milliseconds to save log messages (default: 10 seconds)
     /// - max_cache_size:  maximum number of messages stored in this cache (default: 100)
     /// - index:           ElasticSearch index name (default: "log")
-    /// - date_format      The date format to use when creating the index name. Eg. log-yyyyMMdd (default: "yyyyMMdd"). See [[https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings]]
+    /// - date_format      The date format to use when creating the index name. Eg. log-yyyyMMdd (default: "yyyyMMdd"). See [[https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings]]
     /// - daily:           true to create a new index every day by adding date suffix to the index name(default: false)
     /// - reconnect:       reconnect timeout in milliseconds(default: 60 sec)
     /// - timeout:         invocation timeout in milliseconds(default: 30 sec)
