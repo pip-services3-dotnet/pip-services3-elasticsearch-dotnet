@@ -194,7 +194,7 @@ namespace PipServices3.ElasticSearch.Log
             if (!force && _currentIndexName == newIndex) return;
 
             _currentIndexName = newIndex;
-            var response = await _client.IndicesExistsAsync<StringResponse>(_currentIndexName);
+            var response = await _client.Indices.ExistsAsync<StringResponse>(_currentIndexName);
             if (response.HttpStatusCode == 404)
             {
                 var request = new
@@ -237,7 +237,7 @@ namespace PipServices3.ElasticSearch.Log
                 var json = JsonConverter.ToJson(request);
                 try
                 {
-                    response = await _client.IndicesCreateAsync<StringResponse>(_currentIndexName, PostData.String(json));
+                    response = await _client.Indices.CreateAsync<StringResponse>(_currentIndexName, PostData.String(json));
                     if (!response.Success)
                         throw new ConnectionException(correlationId, "CANNOT_CREATE_INDEX", response.Body);
                 }
