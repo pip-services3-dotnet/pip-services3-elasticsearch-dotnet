@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <AssemblyName>PipServices3.ElasticSearch</AssemblyName>
     <RootNamespace>PipServices3.ElasticSearch</RootNamespace>
     <ApplicationIcon />
     <Win32Resource />
-    <Version>3.1.0</Version>
-    <Authors>Sergey Seroukhov, Alex Mazur, Andrew Harrington</Authors>
+    <Version>3.1.1</Version>
+    <Authors>Sergey Seroukhov, Alex Mazur, Andrew Harrington, Danyil Tretiakov</Authors>
     <Copyright>Conceptual Vision Consulting LLC. 2017-2020</Copyright>
     <Description>ElasticSearch logger for Pip.Services in .NET</Description>
     <Company>Conceptual Vision Consulting LLC.</Company>
@@ -29,9 +29,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Elasticsearch.Net" Version="7.7.1" />
-    <PackageReference Include="PipServices3.Commons" Version="3.1.0" />
-    <PackageReference Include="PipServices3.Components" Version="3.1.0" />
-    <PackageReference Include="PipServices3.Rpc" Version="3.3.0" />
+    <PackageReference Include="Elasticsearch.Net" Version="7.8.0" />
+    <PackageReference Include="PipServices3.Commons" Version="3.1.1" />
+    <PackageReference Include="PipServices3.Components" Version="3.1.1" />
+    <PackageReference Include="PipServices3.Rpc" Version="3.3.1" />
   </ItemGroup>
 </Project>
