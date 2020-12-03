@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['write',['Write',['../class_pip_services_1_1_elastic_search_1_1_log_1_1_elastic_search_logger.html#a3bc9a0426e3d930a50754ed9a31c735e',1,'PipServices3::ElasticSearch::Log::ElasticSearchLogger']]]
+  ['write',['Write',['../class_pip_services3_1_1_elastic_search_1_1_log_1_1_elastic_search_logger.html#a79cb117908ef3c914102e0c29e3cf2f8',1,'PipServices3::ElasticSearch::Log::ElasticSearchLogger']]]
 ];
