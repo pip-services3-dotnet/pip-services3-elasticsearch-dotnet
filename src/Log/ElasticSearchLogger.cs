@@ -28,7 +28,7 @@ namespace PipServices3.ElasticSearch.Log
     /// - source:            source (context) name
     /// 
     /// connection(s):
-    /// - discovery_key:         (optional) a key to retrieve the connection from <a href="https://rawgit.com/pip-services3-dotnet/pip-services3-components-dotnet/master/doc/api/interface_pip_services_1_1_components_1_1_connect_1_1_i_discovery.html">IDiscovery</a>
+    /// - discovery_key:         (optional) a key to retrieve the connection from <a href="https://pip-services3-dotnet.github.io/pip-services3-components-dotnet/interface_pip_services_1_1_components_1_1_connect_1_1_i_discovery.html">IDiscovery</a>
     /// - protocol:              connection protocol: http or https
     /// - host:                  host name or IP address
     /// - port:                  port number
@@ -38,7 +38,7 @@ namespace PipServices3.ElasticSearch.Log
     /// - interval:        interval in milliseconds to save log messages (default: 10 seconds)
     /// - max_cache_size:  maximum number of messages stored in this cache (default: 100)
     /// - index:           ElasticSearch index name (default: "log")
-    /// - date_format      The date format to use when creating the index name. Eg. log-yyyyMMdd (default: "yyyyMMdd"). See [[https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings]]
+    /// - date_format      The date format to use when creating the index name. Eg. log-yyyyMMdd (default: "yyyyMMdd"). See <a href="https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings">Custom date and time format strings</a>
     /// - daily:           true to create a new index every day by adding date suffix to the index name(default: false)
     /// - reconnect:       reconnect timeout in milliseconds(default: 60 sec)
     /// - timeout:         invocation timeout in milliseconds(default: 30 sec)
@@ -47,8 +47,8 @@ namespace PipServices3.ElasticSearch.Log
     /// 
     /// ### References ###
     /// 
-    /// - *:context-info:*:*:1.0      (optional) <a href="https://rawgit.com/pip-services3-dotnet/pip-services3-components-dotnet/master/doc/api/class_pip_services_1_1_components_1_1_info_1_1_context_info.html">ContextInfo</a> to detect the context id and specify counters source
-    /// - *:discovery:*:*:1.0         (optional) <a href="https://rawgit.com/pip-services3-dotnet/pip-services3-components-dotnet/master/doc/api/interface_pip_services_1_1_components_1_1_connect_1_1_i_discovery.html">IDiscovery</a> services to resolve connection
+    /// - *:context-info:*:*:1.0      (optional) <a href="https://pip-services3-dotnet.github.io/pip-services3-components-dotnet/class_pip_services_1_1_components_1_1_info_1_1_context_info.html">ContextInfo</a> to detect the context id and specify counters source
+    /// - *:discovery:*:*:1.0         (optional) <a href="https://pip-services3-dotnet.github.io/pip-services3-components-dotnet/interface_pip_services_1_1_components_1_1_connect_1_1_i_discovery.html">IDiscovery</a> services to resolve connection
     /// </summary>
     /// <example>
     /// <code>
