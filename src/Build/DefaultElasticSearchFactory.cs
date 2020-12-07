@@ -8,7 +8,7 @@ namespace PipServices3.ElasticSearch.Build
     /// <summary>
     /// Creates ElasticSearch components by their descriptors.
     /// </summary>
-    /// See <a href="https://rawgit.com/pip-services3-dotnet/pip-services3-elasticsearch-dotnet/master/doc/api/class_pip_services_1_1_elastic_search_1_1_log_1_1_elastic_search_logger.html">ElasticSearchLogger</a>
+    /// See <a href="https://pip-services3-dotnet.github.io/pip-services3-elasticsearch-dotnet/class_pip_services_1_1_elastic_search_1_1_log_1_1_elastic_search_logger.html">ElasticSearchLogger</a>
     public class DefaultElasticSearchFactory: Factory
     {
         public static readonly Descriptor Descriptor = new Descriptor("pip-services", "factory", "elasticsearch", "default", "1.0");
