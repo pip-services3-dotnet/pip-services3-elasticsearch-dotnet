@@ -3,21 +3,28 @@
 ##Set-StrictMode -Version latest
 $ErrorActionPreference = "Stop"
 
-# Get component data and set necessary variables
+# Generate image and container names using the data in the "component.json" file
 $component = Get-Content -Path "component.json" | ConvertFrom-Json
 
-$docsImage="$($component.registry)/$($component.name):$($component.version)-$($component.build)-docs"
+$docImage="$($component.registry)/$($component.name):$($component.version)-$($component.build)-docs"
 $container=$component.name
 
-# Remove documentation files
-if (Test-Path "docs") {
-    Remove-Item -Recurse -Force -Path "docs"
+# Remove build files
+if (Test-Path "./docs") {
+    Remove-Item -Recurse -Force -Path "./docs/*"
+} else {
+    New-Item -ItemType Directory -Force -Path "./docs"
 }
 
 # Build docker image
-docker build -f docker/Dockerfile.docs -t $docsImage .
+docker build -f docker/Dockerfile.docgen -t $docImage .
 
-# Create and copy compiled files, then destroy
-docker create --name $container $docsImage
-docker cp "$($container):/app/docs" ./docs
+# Create and copy compiled files, then destroy the container
+docker create --name $container $docImage
+docker cp "$($container):/dotnet/app/html/." ./docs
 docker rm $container
+
+if (!(Test-Path "./docs")) {
+    Write-Host "docs folder doesn't exist in root dir. Build failed. Watch logs above."
+    exit 1
+}
