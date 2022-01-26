@@ -194,60 +194,64 @@ namespace PipServices3.ElasticSearch.Log
             if (!force && _currentIndexName == newIndex) return;
 
             _currentIndexName = newIndex;
-            var response = await _client.Indices.ExistsAsync<StringResponse>(_currentIndexName);
-            if (response.HttpStatusCode == 404)
+            StringResponse response = null;
+            try
             {
-                var request = new
+                response = await _client.Indices.ExistsAsync<StringResponse>(_currentIndexName);
+            } catch (ElasticsearchClientException exResp)
+            {
+                if (exResp.Response.HttpStatusCode == 404)
                 {
-                    settings = new
+                    var request = new
                     {
-                        number_of_shards = 1
-                    },
-                    mappings = new
-                    {
-                        log_message = new
+                        settings = new
                         {
-                            properties = new
-                            {
-                                time = new { type = "date", index = true },
-                                source = new { type = "keyword", index = true },
-                                level = new { type = "keyword", index = true },
-                                correlation_id = new { type = "text", index = true },
-                                error = new
+                            number_of_shards = 1
+                        },
+                        mappings = new
+                        {
+                                properties = new
                                 {
-                                    type = "object",
-                                    properties = new
+                                    time = new { type = "date", index = true },
+                                    source = new { type = "keyword", index = true },
+                                    level = new { type = "keyword", index = true },
+                                    correlation_id = new { type = "text", index = true },
+                                    error = new
                                     {
-                                        type = new { type = "keyword", index = true },
-                                        category = new { type = "keyword", index = true },
-                                        status = new { type = "integer", index = false },
-                                        code = new { type = "keyword", index = true },
-                                        message = new { type = "text", index = false },
-                                        details = new { type = "object" },
-                                        correlation_id = new { type = "text", index = false },
-                                        cause = new { type = "text", index = false },
-                                        stack_trace = new { type = "text", index = false }
-                                    }
-                                },
-                                message = new { type = "text", index = _indexMessage }
-                            }
+                                        type = "object",
+                                        properties = new
+                                        {
+                                            type = new { type = "keyword", index = true },
+                                            category = new { type = "keyword", index = true },
+                                            status = new { type = "integer", index = false },
+                                            code = new { type = "keyword", index = true },
+                                            message = new { type = "text", index = false },
+                                            details = new { type = "object" },
+                                            correlation_id = new { type = "text", index = false },
+                                            cause = new { type = "text", index = false },
+                                            stack_trace = new { type = "text", index = false }
+                                        }
+                                    },
+                                    message = new { type = "text", index = _indexMessage }
+                                }
                         }
+                    };
+                    var json = JsonConverter.ToJson(request);
+                    try
+                    {
+                        response = await _client.Indices.CreateAsync<StringResponse>(_currentIndexName, PostData.String(json));
+                        if (!response.Success)
+                            throw new ConnectionException(correlationId, "CANNOT_CREATE_INDEX", response.Body);
                     }
-                };
-                var json = JsonConverter.ToJson(request);
-                try
-                {
-                    response = await _client.Indices.CreateAsync<StringResponse>(_currentIndexName, PostData.String(json));
-                    if (!response.Success)
-                        throw new ConnectionException(correlationId, "CANNOT_CREATE_INDEX", response.Body);
-                }
-                catch (Exception ex)
-                {
-                    if (!ex.Message.Contains("resource_already_exists"))
-                        throw;
+                    catch (Exception ex)
+                    {
+                        if (!ex.Message.Contains("resource_already_exists"))
+                            throw;
+                    }
                 }
             }
-            else if (!response.Success)
+            
+            if (!response.Success)
             {
                 throw new ConnectionException(correlationId, "CONNECTION_FAILED", response.Body);
             }
